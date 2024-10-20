@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     submitButton.addEventListener("click",()=>{
         const data = todoInput.value.trim();
         if(data=== ''){
-            alert("Please write something:");
+            alert("Please write something here");
         }else {
             addToLocalStorage(data);
             todoInput.value="";
