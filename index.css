@@ -1,0 +1,44 @@
+:root {
+    --background-color : #f4f4f9;
+}
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+}
+
+*, *::after, *::before {
+    box-sizing: border-box;
+}
+
+.container {
+    background-color: #ffffff;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    margin-top: 10px;
+}
+
+h1 {
+    text-align: center;
+}
+
+#new-todo {
+    width: 450px;
+    padding: 10px;
+    margin-right: 10px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+}
+
+#add-btn {
+    padding: 10px 20px;
+    background-color: #5cabff;
+    color: #ffffff;
+    border: 0px;
+    border-radius: 5px;
+    cursor: pointer;
+}
