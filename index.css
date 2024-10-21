@@ -16,8 +16,8 @@ body {
     max-width: 600px;
     margin: 0 auto;
     padding: 20px;
-    display: flex;
-    flex-direction: column;
+    /* display: flex; */
+    /* flex-direction: column; */
     align-items:center;
     margin-top: 10px;
 }
@@ -41,4 +41,37 @@ h1 {
     border: 0px;
     border-radius: 5px;
     cursor: pointer;
+}
+ul {
+    list-style: none;
+    align-self: flex-start;
+    margin: 0;
+    padding: 0;
+}
+li {
+    margin-right: 15px;
+    border-bottom: 2px solid #ddd;
+    padding: 10px;
+    font-size: 25px;
+}
+
+li:hover {
+    background-color: aliceblue;
+}
+
+ul :last-child {
+    border-bottom: none;
+}
+
+.filterButton {
+    padding: 10px 20px;
+    background-color: #e6d43b;
+    color: #000000;
+    border: 0px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px 0px;
+}
+.filterButton:hover {
+    background-color: aliceblue;
 }
