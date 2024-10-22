@@ -53,6 +53,10 @@ li {
     border-bottom: 2px solid #ddd;
     padding: 10px;
     font-size: 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 li:hover {
@@ -63,15 +67,32 @@ ul :last-child {
     border-bottom: none;
 }
 
-.filterButton {
+.filterButton, .edit-btn, .complete-btn, .delete-btn {
     padding: 10px 20px;
     background-color: #e6d43b;
     color: #000000;
     border: 0px;
     border-radius: 5px;
     cursor: pointer;
-    margin: 10px 0px;
+    margin: 10px 10px;
 }
+
+.edit-btn{
+    background-color: #e9803a;
+}
+
+.complete-btn{
+    background-color: #50c030;
+}
+
+.delete-btn{
+    background-color: #e94f2d;
+}
+
 .filterButton:hover {
     background-color: aliceblue;
+}
+
+.completed {
+    text-decoration: line-through;
 }
