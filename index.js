@@ -11,22 +11,25 @@ function addToLocalStorage(newToDo) {
 }
 
 function refreshTodos(todos) {
-  console.log("Here");
   const todosList = document.getElementById("todo-list");
-  console.log(todosList);
   todosList.innerHTML = "";
   let newList = { list: [] };
-  todos.list.forEach((todo) => {
+  todos.list.forEach((todo, index) => {
     newList.list.push({
       text: todo.text,
       isCompleted: todo.isCompleted,
-      id: todo.id,
+      id: index,
     });
     appendToDoInHtml(todo.text, todo.id, todo.isCompleted);
   });
   localStorage.setItem("toDos", JSON.stringify(newList));
+  refreshButtons();
+}
+
+function refreshButtons() {
   const completedBtns = document.getElementsByClassName("complete-btn");
   const deleteBtns = document.getElementsByClassName("delete-btn");
+  const editBtns = document.getElementsByClassName("edit-btn");
 
   Array.from(completedBtns).forEach((btn) => {
     btn.addEventListener("click", completeTodo);
@@ -34,11 +37,12 @@ function refreshTodos(todos) {
   Array.from(deleteBtns).forEach((btn) => {
     btn.addEventListener("click", deleteTodo);
   });
-
+  Array.from(editBtns).forEach((btn) => {
+    btn.addEventListener("click", editTodo);
+  });
 }
 
 function completeTodo(event) {
-  console.log("Here");
   const todoItem = event.target.parentElement.parentElement;
   const todoId = todoItem.getAttribute("data-item");
   const todos = loadToDos();
@@ -49,27 +53,46 @@ function completeTodo(event) {
     }
   });
   refreshTodos(todos);
-  console.log("Hi======>", todos.list);
 }
 
 function deleteTodo(event) {
+  const todoItem = event.target.parentElement.parentElement;
+  const todoId = todoItem.getAttribute("data-item");
+  const todos = loadToDos();
+
+  let newList = todos.list.filter((it) => {
+    if (it.id == todoId) {
+      return false;
+    }
+    return true;
+  });
+  refreshTodos({ list: newList });
+}
+
+function editTodo(event) {
     const todoItem = event.target.parentElement.parentElement;
     const todoId = todoItem.getAttribute("data-item");
     const todos = loadToDos();
-
-    console.log("Here",todoItem,todoId,todos);
-
-  
-    let newList = todos.list.filter((it) => {
-        console.log(it.id,todoId)
+    const text = prompt("Enter updated text");
+    console.log("here1")
+    if (!text) {
+      return
+    }
+    console.log("Kaushal");
+    let newList = todos.list.map((it) => {
       if (it.id == todoId) {
-        return false;
+        return {
+          id: it.id,
+          text: text,
+          isCompleted: it.isCompleted,
+        };
+      } else {
+        return it;
       }
-      return true;
     });
-    // console.log("Hi======>", newList);
-    refreshTodos({list:newList});
-  }
+    console.log("here")
+    refreshTodos({ list: newList });
+}
 
 function appendToDoInHtml(todoText, idx, isCompleted) {
   const todoList = document.getElementById("todo-list");
@@ -114,16 +137,13 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Please write something here");
     } else {
       let list = loadToDos();
-      appendToDoInHtml(data, list.list.length, false);
-      addToLocalStorage(data);
+      list.list.push({ text: data, id: list.list.length, isCompleted: false });
+      refreshTodos(list);
       todoInput.value = "";
     }
   });
 
   const filterButton = document.getElementsByClassName("filterButton");
-  const completedBtns = document.getElementsByClassName("complete-btn");
-  const deleteBtns = document.getElementsByClassName("delete-btn");
-
 
   Array.from(filterButton).forEach((data) => {
     data.addEventListener("click", (event) => {
@@ -149,16 +169,12 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         });
       }
+      refreshButtons();
     });
   });
   let dt = loadToDos();
   dt?.list?.forEach((todoText) => {
     appendToDoInHtml(todoText.text, todoText.id, todoText.isCompleted);
   });
-  Array.from(completedBtns).forEach((btn) => {
-    btn.addEventListener("click", completeTodo);
-  });
-  Array.from(deleteBtns).forEach((btn) => {
-    btn.addEventListener("click", deleteTodo);
-  });
+  refreshButtons();
 });
